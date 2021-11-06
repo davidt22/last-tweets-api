@@ -48,7 +48,7 @@ class FindLastTweetsByUserService implements ApplicationService
      */
     public function execute(RequestInterface $request): array
     {
-        $key = self::CACHE_KEY.$request->username();
+        $key = self::CACHE_KEY.$request->username().$request->limit();
 
         if ($this->cache->has($key)) {
             return $this->cache->get($key);
