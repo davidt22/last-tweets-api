@@ -1,24 +1,40 @@
 <?php
 
-namespace App\Letgo\Infrastructure;
+namespace App\Letgo\Infrastructure\Persistence;
 
-use App\Letgo\Domain\Tweet;
-use App\Letgo\Domain\TweetRepository;
+
+use App\Letgo\Domain\Tweet\Tweet;
+use App\Letgo\Domain\Tweet\TweetId;
+use App\Letgo\Domain\Tweet\TweetLimitException;
+use App\Letgo\Domain\Tweet\TweetRepository;
+use App\Letgo\Domain\User\User;
 
 final class TweetRepositoryInMemory implements TweetRepository
 {
-    /**
-     * @param string $username
-     * @param int $limit
-     * @return Tweet[]
-     */
-    public function searchByUserName(string $username, int $limit): array
+    const TWEET_LIMIT = 10;
+
+    public function nextIdentity(): TweetId
     {
-        $randomEntries = array_rand($this->tweets, $limit);
-        $tweets = [];
-        foreach ($randomEntries as $randomEntry) {
-            $tweets[] = new Tweet($this->tweets[$randomEntry]);
+        return new TweetId();
+    }
+
+    /**
+     * @throws TweetLimitException
+     */
+    public function searchByUser(User $user, int $limit): array
+    {
+        if ($limit > self::TWEET_LIMIT) {
+            throw new TweetLimitException('Tweets are restricted to ' . self::TWEET_LIMIT);
         }
+
+        $randomEntries = array_rand($this->tweets, $limit);
+
+        $tweets = [];
+        foreach ((array) $randomEntries as $randomEntry) {
+            $tweetId = $this->nextIdentity();
+            $tweets[] = new Tweet($tweetId, $user, $this->tweets[$randomEntry]);
+        }
+
         return $tweets;
     }
 
