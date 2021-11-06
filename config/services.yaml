@@ -22,8 +22,8 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Letgo\Application\Controller\:
-        resource: '../src/Letgo/Application/Controller'
+    App\Letgo\Infrastructure\Controller\:
+        resource: '../src/Letgo/Infrastructure/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
