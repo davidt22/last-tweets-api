@@ -10,7 +10,8 @@
         "symfony/debug": "4.1.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "symfony/cache": "4.1.*"
     },
     "require-dev": {
         "symfony/dotenv": "*"

@@ -13,10 +13,13 @@ class TweetDataTransformer implements DataTransformer
     public function read(): string
     {
         $lastCharacter = substr($this->tweet->text(), -1);
-
         if ($lastCharacter != '!') {
-            $text = $this->tweet->text();
-            $this->tweet->setText($text .= '!');
+            $text = $this->tweet->text().'!';
+
+            // This removes the special accents
+            $text = iconv('utf-8', 'ascii//TRANSLIT', $text);
+
+            $this->tweet->setText($text);
         }
 
         return strtoupper($this->tweet->text());
