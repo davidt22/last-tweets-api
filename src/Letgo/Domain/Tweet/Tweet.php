@@ -3,7 +3,6 @@
 namespace App\Letgo\Domain\Tweet;
 
 use App\Letgo\Domain\User\User;
-use App\Letgo\Domain\User\UserId;
 
 final class Tweet
 {

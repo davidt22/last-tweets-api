@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ShoutController extends AbstractController
 {
+    const MAX_LIMIT = 10;
+
     public function index(
         FindLastTweetsByUserService $findLastTweetsByUserService,
         $twitterName,
         Request $request
     ): JsonResponse {
         try {
-            $limit = 10;
+            $limit = self::MAX_LIMIT;
 
             if ($request->query->get('limit')) {
                 $limit = $request->query->get('limit');
@@ -28,9 +30,8 @@ final class ShoutController extends AbstractController
 
             return new JsonResponse($tweets);
         } catch (\Exception $exception) {
-            $message = $exception->getMessage();
             $response = [
-                'message' => $message
+                'message' => $exception->getMessage()
             ];
 
             return new JsonResponse($response, Response::HTTP_INTERNAL_SERVER_ERROR);
