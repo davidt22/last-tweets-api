@@ -1,5 +1,3 @@
-# Letgo Tech Test 
-
 ## Arranque inicial
 
 1- Instalar los vendors: `composer install`
