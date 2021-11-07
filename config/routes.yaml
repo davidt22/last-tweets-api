@@ -1,4 +1,4 @@
 shout:
     path: /shout/{twitterName}
-    controller: App\Letgo\Application\Controller\ShoutController::index
+    controller: App\Letgo\Infrastructure\Controller\ShoutController::index
 
